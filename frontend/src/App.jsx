@@ -14,6 +14,7 @@ const router = createBrowserRouter([
       { path: 'guia/:slug', element: <GuiaPage /> },     // "/guia/x" -> detalhe
       { path: 'cadastrar', element: <RegisterPage /> },
       { path: 'login', element: < LoginSenha/> },  // "/cadastrar"
+      { path: 'guia/:slug', element: <GuiaPage /> } // "/guia/x" -> detalhe
     ],
   },
 ]);

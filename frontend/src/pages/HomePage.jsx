@@ -19,7 +19,7 @@ function HomePage() {
               <img
                 src={logo}
                 alt="B2BTI Logo"
-                className="h-16 object-contain"
+                className="h-40 w-auto object-contain "
                 onError={(e) => { e.target.style.display = 'none'; }}
               />
             </a>
