@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 // Ajuste se o seu backend rodar em outro endereço/porta
-const API_URL = 'http://localhost:8000/api';
-const BACKEND_URL = 'http://localhost:8000'; // usado para montar a URL completa das imagens
+const API_URL = 'http://localhost:3000/api';
+const BACKEND_URL = 'http://localhost:3000'; // usado para montar a URL completa das imagens
 
 // Ajuste para o número real de WhatsApp da equipe de suporte (com DDI+DDD, só números)
 const WHATSAPP_NUMERO = '5512997727816';
@@ -18,7 +18,7 @@ function GuiaPage() {
     setCarregando(true);
     setErro(null);
 
-    fetch(`${API_URL}/guia.php?slug=${slug}`)
+    fetch(`${API_URL}/guia/${slug}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.erro) {

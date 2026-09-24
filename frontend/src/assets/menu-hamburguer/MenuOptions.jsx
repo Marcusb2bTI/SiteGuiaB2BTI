@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 // Ajuste se o seu backend rodar em outro endereço/porta
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'http://localhost:3000/api';
 
 function MenuOptions({ setIsOpen, isOpen }) {
   const [assuntos, setAssuntos] = useState([]);
@@ -12,7 +12,7 @@ function MenuOptions({ setIsOpen, isOpen }) {
   };
 
   useEffect(() => {
-    fetch(`${API_URL}/assuntos.php`)
+    fetch(`${API_URL}/assuntos`)
       .then((res) => res.json())
       .then((data) => setAssuntos(data))
       .catch(() => setAssuntos([]));

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 // Ajuste se o seu backend rodar em outro endereço/porta
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'http://localhost:3000/api';
 
 function OptionsHomePage() {
   const [assuntos, setAssuntos] = useState([]);
@@ -10,7 +10,7 @@ function OptionsHomePage() {
   const [erro, setErro] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/assuntos.php`)
+    fetch(`${API_URL}/assuntos`)
       .then((res) => res.json())
       .then((data) => setAssuntos(data))
       .catch(() => setErro('Não foi possível carregar os tutoriais.'))
