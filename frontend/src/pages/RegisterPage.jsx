@@ -27,6 +27,28 @@ function RegisterPage() {
 
   const fileInputRef = useRef(null);
 
+  const emojis = [
+    { emoji: "🖨️", nome: "Impressora" },
+    { emoji: "💻", nome: "Computador" },
+    { emoji: "🖥️", nome: "Monitor" },
+    { emoji: "⌨️", nome: "Teclado" },
+    { emoji: "🖱️", nome: "Mouse" },
+    { emoji: "📱", nome: "Celular" },
+    { emoji: "🧾", nome: "Nota fiscal" },
+    { emoji: "💰", nome: "Financeiro" },
+    { emoji: "🏦", nome: "Banco" },
+    { emoji: "🔧", nome: "Configuração" },
+    { emoji: "⚙️", nome: "Sistema" },
+    { emoji: "🔒", nome: "Segurança" },
+    { emoji: "🔑", nome: "Acesso" },
+    { emoji: "📄", nome: "Documento" },
+    { emoji: "📁", nome: "Arquivo" },
+    { emoji: "📧", nome: "E-mail" },
+    { emoji: "🌐", nome: "Internet" },
+    { emoji: "❓", nome: "Dúvida" },
+    { emoji: "💡", nome: "Informação" }
+  ];
+
   function handleImageChange(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -173,14 +195,19 @@ function RegisterPage() {
           rows={3}
         />
 
-        <input
+        <select
           className={inputClass}
-          type="text"
-          placeholder="Emoji do card (ex: 🖨️)"
           value={assuntoIcone}
           onChange={(e) => setAssuntoIcone(e.target.value)}
-          maxLength={4}
-        />
+        >
+          <option value="">Selecione um emoji</option>
+
+          {emojis.map((item) => (
+            <option key={item.emoji} value={item.emoji}>
+              {item.emoji} {item.nome}
+            </option>
+          ))}
+        </select>
 
         <input
           className={inputClass}
@@ -283,9 +310,8 @@ function RegisterPage() {
       <button
         onClick={handleCadastrarTutorial}
         disabled={enviando}
-        className={`w-full max-w-xl border-none rounded-lg h-12 font-bold mt-5 text-base text-white transition-colors ${
-          enviando ? "bg-gray-400 cursor-default" : "bg-green-600 hover:bg-green-700 cursor-pointer"
-        }`}
+        className={`w-full max-w-xl border-none rounded-lg h-12 font-bold mt-5 text-base text-white transition-colors ${enviando ? "bg-gray-400 cursor-default" : "bg-green-600 hover:bg-green-700 cursor-pointer"
+          }`}
       >
         {enviando ? "Cadastrando..." : "Cadastrar Tutorial"}
       </button>
