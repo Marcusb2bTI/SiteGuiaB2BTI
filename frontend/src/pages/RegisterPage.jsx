@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 // Ajuste essa URL se o seu backend rodar em outro endereço/porta
 const API_URL = 'http://localhost:3000/api';
 
@@ -149,8 +150,13 @@ function RegisterPage() {
         if (passo._file) formData.append(`imagem_${index}`, passo._file);
       });
 
+      const token = localStorage.getItem('token');
+
       const res = await fetch(`${API_URL}/cadastrar-tutorial`, {
         method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
         body: formData,
       });
 

@@ -6,6 +6,7 @@ const path = require('path');
 const assuntosRouter = require('./routes/assuntos');
 const guiaRouter = require('./routes/guia');
 const cadastrarTutorialRouter = require('./routes/cadastrarTutorial');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/assuntos', assuntosRouter);
 app.use('/api/guia', guiaRouter);
 app.use('/api/cadastrar-tutorial', cadastrarTutorialRouter);
+app.use('/api/auth', authRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

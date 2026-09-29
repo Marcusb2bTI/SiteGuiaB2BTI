@@ -3,7 +3,6 @@ import HomePage from './pages/HomePage';
 import OptionsHomePage from './pages/OptionsHomePage';
 import GuiaPage from './pages/Guia/[slug]';
 import RegisterPage from './pages/RegisterPage';
-import LoginSenha from './pages/article/LoginSenha';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +12,6 @@ const router = createBrowserRouter([
       { index: true, element: <OptionsHomePage /> },   // "/"        -> cards
       { path: 'guia/:slug', element: <GuiaPage /> },     // "/guia/x" -> detalhe
       { path: 'cadastrar', element: <RegisterPage /> },
-      { path: 'login', element: < LoginSenha/> },  // "/cadastrar"
       { path: 'guia/:slug', element: <GuiaPage /> } // "/guia/x" -> detalhe
     ],
   },

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const autenticar = require('../middleware/auth');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -12,7 +13,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 // Espera multipart/form-data com: titulo, descricao, icone, video_url,
 // passos (string JSON: [{"titulo":"...","descricao":"..."}]),
 // e arquivos imagem_0, imagem_1... (um por passo)
-router.post('/', upload.any(), async (req, res) => {
+router.post('/', autenticar, upload.any(), async (req, res) => {
   const { titulo, descricao, video_url, icone, passos: passosJson } = req.body;
 
   if (!titulo || !passosJson) {

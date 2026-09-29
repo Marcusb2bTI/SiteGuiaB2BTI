@@ -33,7 +33,6 @@ router.get('/:slug', async (req, res) => {
         [passo.id]
       );
       passo.imagens = imagens.map((i) => i.url);
-      delete passo.id;
     }
 
     res.json({

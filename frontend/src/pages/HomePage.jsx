@@ -3,9 +3,11 @@ import { Outlet } from 'react-router-dom';
 import MenuHamburguer from '../assets/menu-hamburguer/MenuHamburguer';
 import MenuOptions from '../assets/menu-hamburguer/MenuOptions';
 import { useState } from 'react';
+import AdminLoginModal from '../components/AdminLoginModal';
 
 function HomePage() {
   const [isOpen, setIsOpen] = useState(false);
+  const [modalLogin, setModalLogin] = useState(false);
 
   return (
     <section className="min-h-screen bg-gray-100">
