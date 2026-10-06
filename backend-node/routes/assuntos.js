@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
+const supabase = require('../config/supabase');
 
 const pool = require('../config/database');
 const autenticar = require('../middleware/auth');
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
 
 
 // PUT /api/assuntos/:id
-router.put('/:id',autenticar, upload.any(), async (req, res) => {
+router.put('/:id', autenticar, upload.any(), async (req, res) => {
 
   const { id } = req.params;
 
@@ -108,18 +108,6 @@ router.put('/:id',autenticar, upload.any(), async (req, res) => {
     // =====================================================
     // 2. PASTA DAS IMAGENS
     // =====================================================
-
-    const pastaUpload = path.join(
-      __dirname,
-      '..',
-      'uploads',
-      assunto.slug
-    );
-
-
-    fs.mkdirSync(pastaUpload, {
-      recursive: true
-    });
 
 
     // =====================================================
@@ -233,45 +221,46 @@ router.put('/:id',autenticar, upload.any(), async (req, res) => {
       // ---------------------------------------------
       // NOVAS IMAGENS
       // ---------------------------------------------
-
+      ////
       const arquivos = (req.files || []).filter(
         (file) => file.fieldname === `imagem_${index}`
       );
 
-
       for (let imgIndex = 0; imgIndex < arquivos.length; imgIndex++) {
-
         const arquivo = arquivos[imgIndex];
 
-        const extensao = path.extname(
-          arquivo.originalname
-        );
-
+        const extensao = path.extname(arquivo.originalname);
 
         const nomeArquivo =
-          `passo${index + 1}_${Date.now()}_${imgIndex}${extensao}`;
+          `${assunto.slug}/passo${index + 1}_${Date.now()}_${imgIndex}${extensao}`;
 
+        // Envia a imagem para o Supabase Storage
+        const { error: erroUpload } = await supabase.storage
+          .from('imagens-guias')
+          .upload(nomeArquivo, arquivo.buffer, {
+            contentType: arquivo.mimetype,
+            upsert: false
+          });
 
-        const caminhoDestino = path.join(
-          pastaUpload,
-          nomeArquivo
-        );
+        if (erroUpload) {
+          throw new Error(
+            'Erro ao enviar imagem para o Storage: ' +
+            erroUpload.message
+          );
+        }
 
+        // Obtém a URL pública da imagem
+        const { data } = supabase.storage
+          .from('imagens-guias')
+          .getPublicUrl(nomeArquivo);
 
-        fs.writeFileSync(
-          caminhoDestino,
-          arquivo.buffer
-        );
+        const urlPublica = data.publicUrl;
 
-
-        const urlPublica =
-          `uploads/${assunto.slug}/${nomeArquivo}`;
-
-
+        // Salva a URL do Supabase no banco
         await client.query(
           `INSERT INTO passo_imagens
-           (passo_id, url, ordem)
-           VALUES ($1, $2, $3)`,
+     (passo_id, url, ordem)
+     VALUES ($1, $2, $3)`,
           [
             passoId,
             urlPublica,
@@ -279,6 +268,7 @@ router.put('/:id',autenticar, upload.any(), async (req, res) => {
           ]
         );
       }
+      ////
     }
 
 
@@ -337,7 +327,7 @@ router.put('/:id',autenticar, upload.any(), async (req, res) => {
 });
 
 // PATCH /api/assuntos/:id/desativar
-router.patch('/:id/desativar',autenticar, async (req, res) => {
+router.patch('/:id/desativar', autenticar, async (req, res) => {
 
   const { id } = req.params;
 

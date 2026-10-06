@@ -3,9 +3,9 @@ const router = express.Router();
 const autenticar = require('../middleware/auth');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
 const pool = require('../config/database');
 const slugify = require('../utils/slugify');
+const supabase = require('../config/supabase');
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -60,9 +60,6 @@ router.post('/', autenticar, upload.any(), async (req, res) => {
     );
     const assuntoId = assuntoRows[0].id;
 
-    // Pasta onde as imagens desse assunto vão ficar: uploads/{slug}/
-    const pastaUpload = path.join(__dirname, '..', 'uploads', slug);
-    fs.mkdirSync(pastaUpload, { recursive: true });
 
     // 2) Cria cada passo + sua imagem (se enviada)
     for (let index = 0; index < passos.length; index++) {
@@ -75,16 +72,42 @@ router.post('/', autenticar, upload.any(), async (req, res) => {
       );
       const passoId = passoRows[0].id;
 
-      const arquivo = (req.files || []).find((f) => f.fieldname === `imagem_${index}`);
+      const arquivo = (req.files || []).find(
+        (f) => f.fieldname === `imagem_${index}`
+      );
+
       if (arquivo) {
         const extensao = path.extname(arquivo.originalname);
-        const nomeArquivo = `passo${index + 1}${extensao}`;
-        const caminhoDestino = path.join(pastaUpload, nomeArquivo);
-        fs.writeFileSync(caminhoDestino, arquivo.buffer);
 
-        const urlPublica = `uploads/${slug}/${nomeArquivo}`;
+        // Nome único do arquivo
+        const nomeArquivo = `${slug}/passo${index + 1}_${Date.now()}${extensao}`;
+
+        // Upload para o Supabase Storage
+        const { error: erroUpload } = await supabase.storage
+          .from('imagens-guias')
+          .upload(nomeArquivo, arquivo.buffer, {
+            contentType: arquivo.mimetype,
+            upsert: true,
+          });
+
+        if (erroUpload) {
+          throw new Error(
+            'Erro ao enviar imagem para o Storage: ' +
+            erroUpload.message
+          );
+        }
+
+        // Gera URL pública
+        const { data } = supabase.storage
+          .from('imagens-guias')
+          .getPublicUrl(nomeArquivo);
+
+        const urlPublica = data.publicUrl;
+
+        // Salva no banco
         await client.query(
-          `INSERT INTO passo_imagens (passo_id, url, ordem) VALUES ($1, $2, 0)`,
+          `INSERT INTO passo_imagens (passo_id, url, ordem)
+     VALUES ($1, $2, 0)`,
           [passoId, urlPublica]
         );
       }

@@ -397,6 +397,16 @@ function GuiaPage() {
     );
   }
 
+  function obterUrlImagem(img) {
+    if (!img) return '';
+
+    if (img.startsWith('http')) {
+      return img;
+    }
+
+    return `${BACKEND_URL}/${img}`;
+  }
+
   async function salvarEdicao() {
     try {
 
@@ -764,7 +774,7 @@ function GuiaPage() {
 
                           const imagemSrc =
                             typeof img === 'string'
-                              ? `${BACKEND_URL}/${img}`
+                              ? obterUrlImagem(img)
                               : img.preview;
 
                           return (
@@ -1011,15 +1021,29 @@ function GuiaPage() {
 
             {passo.imagens && passo.imagens.length > 0 && (
               <div className="mt-4 flex flex-col gap-3">
-                {passo.imagens.map((img, i) => (
-                  <img
-                    key={i}
-                    src={`${BACKEND_URL}/${img}`}
-                    alt={passo.titulo}
-                    onClick={() => abrirImagem(`${BACKEND_URL}/${img}`)}
-                    className="w-full rounded-xl border border-gray-200 cursor-pointer hover:opacity-90 transition-opacity"
-                  />
-                ))}
+                {passo.imagens.map((img, i) => {
+                  console.log('URL DA IMAGEM:', img);
+
+                  return (
+                    <img
+                      key={img}
+                      src={
+                        img.startsWith('http')
+                          ? img
+                          : `${BACKEND_URL}/${img}`
+                      }
+                      alt={passo.titulo}
+                      onClick={() =>
+                        abrirImagem(
+                          img.startsWith('http')
+                            ? img
+                            : `${BACKEND_URL}/${img}`
+                        )
+                      }
+                      className="w-full rounded-xl border border-gray-200 cursor-pointer hover:opacity-90 transition-opacity"
+                    />
+                  );
+                })}
               </div>
             )}
           </div>
