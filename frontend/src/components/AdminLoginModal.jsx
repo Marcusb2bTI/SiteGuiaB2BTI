@@ -82,7 +82,7 @@ function AdminLoginModal({
       <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
 
         <h2 className="text-xl font-bold mb-2">
-          🔐 Acesso administrativo
+           Acesso administrativo
         </h2>
 
         <p className="text-gray-600 mb-5">
@@ -99,7 +99,7 @@ function AdminLoginModal({
             type="text"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
-            placeholder="Digite seu usuário"
+            placeholder="Digite seu usuário:"
             className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             autoFocus
           />
@@ -120,7 +120,7 @@ function AdminLoginModal({
                 fazerLogin();
               }
             }}
-            placeholder="Digite sua senha"
+            placeholder="Digite sua senha:"
             className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>

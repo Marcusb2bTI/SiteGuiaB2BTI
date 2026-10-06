@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import AdminLoginModal from '../../components/AdminLoginModal';
+import { ImBubbles4 } from "react-icons/im";
 
 // Ajuste se o seu backend rodar em outro endereço/porta
 const API_URL = 'http://localhost:3000/api';
@@ -550,7 +551,7 @@ function GuiaPage() {
             <div className="flex items-center justify-between mb-6">
 
               <h2 className="text-2xl font-bold text-gray-900">
-                ✏️ Editar assunto
+                 Editar assunto
               </h2>
 
               <button
@@ -676,7 +677,7 @@ function GuiaPage() {
               <div className="flex items-center justify-between mb-4">
 
                 <h3 className="text-lg font-semibold">
-                  📋 Passos do tutorial
+                   Passos do tutorial
                 </h3>
 
                 <button
@@ -873,7 +874,7 @@ function GuiaPage() {
           <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
 
             <h2 className="text-xl font-bold mb-2">
-              🔐 Acesso administrativo
+              Acesso administrativo
             </h2>
 
             <p className="text-gray-600 mb-5">
@@ -891,7 +892,7 @@ function GuiaPage() {
                 type="text"
                 value={usuarioLogin}
                 onChange={(e) => setUsuarioLogin(e.target.value)}
-                placeholder="Digite seu usuário"
+                placeholder="Digite seu usuário:"
                 className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
@@ -913,7 +914,7 @@ function GuiaPage() {
                     fazerLogin();
                   }
                 }}
-                placeholder="Digite sua senha"
+                placeholder="Digite sua senha:"
                 className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
@@ -978,14 +979,14 @@ function GuiaPage() {
               onClick={() => pedirLogin('editar', assunto)}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg flex-1 hover:bg-blue-700 transition-colors"
             >
-              ✏️ Editar
+               Editar
             </button>
 
             <button
               onClick={() => pedirLogin('desativar', assunto)}
               className="px-4 py-2 bg-red-600 text-white rounded-lg flex-1 hover:bg-red-700 transition-colors"
             >
-              🚫 Desativar
+               Desativar
             </button>
 
           </div>
@@ -1079,7 +1080,7 @@ function GuiaPage() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-xl transition-colors no-underline"
         >
-          Falar com o suporte no WhatsApp 👨🏻‍💻
+          Falar com o suporte no WhatsApp 👨🏻
         </a>
       </div>
 
