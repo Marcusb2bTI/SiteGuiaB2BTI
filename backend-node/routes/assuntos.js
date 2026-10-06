@@ -33,6 +33,24 @@ router.get('/', async (req, res) => {
 // PUT /api/assuntos/:id
 router.put('/:id', autenticar, upload.any(), async (req, res) => {
 
+  function obterCaminhoStorage(url) {
+    if (!url || typeof url !== 'string') {
+      return null;
+    }
+
+    const marcador = '/storage/v1/object/public/imagens-guias/';
+
+    const index = url.indexOf(marcador);
+
+    if (index === -1) {
+      return null;
+    }
+
+    return decodeURIComponent(
+      url.substring(index + marcador.length)
+    );
+  }
+
   const { id } = req.params;
 
   const {
@@ -205,10 +223,11 @@ router.put('/:id', autenticar, upload.any(), async (req, res) => {
 
 
       // Remove imagens antigas que não estão mais no frontend
-      await client.query(
-        `DELETE FROM passo_imagens
-         WHERE passo_id = $1
-         AND url <> ALL($2::text[])`,
+      const { rows: imagensParaRemover } = await client.query(
+        `SELECT id, url
+   FROM passo_imagens
+   WHERE passo_id = $1
+   AND url <> ALL($2::text[])`,
         [
           passoId,
           imagensExistentes.length > 0
@@ -216,6 +235,29 @@ router.put('/:id', autenticar, upload.any(), async (req, res) => {
             : ['__nenhuma_imagem__']
         ]
       );
+
+      for (const imagem of imagensParaRemover) {
+        const caminhoStorage = obterCaminhoStorage(imagem.url);
+
+        if (caminhoStorage) {
+          const { error: erroRemocao } = await supabase.storage
+            .from('imagens-guias')
+            .remove([caminhoStorage]);
+
+          if (erroRemocao) {
+            console.error(
+              'Erro ao remover imagem do Storage:',
+              erroRemocao
+            );
+          }
+        }
+
+        await client.query(
+          `DELETE FROM passo_imagens
+     WHERE id = $1`,
+          [imagem.id]
+        );
+      }
 
 
       // ---------------------------------------------

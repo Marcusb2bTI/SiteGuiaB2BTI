@@ -1022,8 +1022,6 @@ function GuiaPage() {
             {passo.imagens && passo.imagens.length > 0 && (
               <div className="mt-4 flex flex-col gap-3">
                 {passo.imagens.map((img, i) => {
-                  console.log('URL DA IMAGEM:', img);
-
                   return (
                     <img
                       key={img}
