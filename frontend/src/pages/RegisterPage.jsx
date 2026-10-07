@@ -1,5 +1,29 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  FaPrint,
+  FaLaptop,
+  FaDesktop,
+  FaKeyboard,
+  FaMouse,
+  FaMobileAlt,
+  FaFileInvoice,
+  FaMoneyBillWave,
+  FaUniversity,
+  FaTools,
+  FaCog,
+  FaLock,
+  FaKey,
+  FaFileAlt,
+  FaFolder,
+  FaEnvelope,
+  FaGlobe,
+  FaQuestionCircle,
+  FaLightbulb,
+  FaCamera 
+} from 'react-icons/fa';
+import { RiBookShelfLine } from "react-icons/ri";
+import { RxPencil2 } from "react-icons/rx";
 
 
 // Ajuste essa URL se o seu backend rodar em outro endereço/porta
@@ -28,26 +52,26 @@ function RegisterPage() {
 
   const fileInputRef = useRef(null);
 
-  const emojis = [
-    { emoji: "🖨️", nome: "Impressora" },
-    { emoji: "💻", nome: "Computador" },
-    { emoji: "🖥️", nome: "Monitor" },
-    { emoji: "⌨️", nome: "Teclado" },
-    { emoji: "🖱️", nome: "Mouse" },
-    { emoji: "📱", nome: "Celular" },
-    { emoji: "🧾", nome: "Nota fiscal" },
-    { emoji: "💰", nome: "Financeiro" },
-    { emoji: "🏦", nome: "Banco" },
-    { emoji: "🔧", nome: "Configuração" },
-    { emoji: "⚙️", nome: "Sistema" },
-    { emoji: "🔒", nome: "Segurança" },
-    { emoji: "🔑", nome: "Acesso" },
-    { emoji: "📄", nome: "Documento" },
-    { emoji: "📁", nome: "Arquivo" },
-    { emoji: "📧", nome: "E-mail" },
-    { emoji: "🌐", nome: "Internet" },
-    { emoji: "❓", nome: "Dúvida" },
-    { emoji: "💡", nome: "Informação" }
+  const iconesDisponiveis = [
+    { icone: FaPrint, nome: 'Impressora' },
+    { icone: FaLaptop, nome: 'Computador' },
+    { icone: FaDesktop, nome: 'Monitor' },
+    { icone: FaKeyboard, nome: 'Teclado' },
+    { icone: FaMouse, nome: 'Mouse' },
+    { icone: FaMobileAlt, nome: 'Celular' },
+    { icone: FaFileInvoice, nome: 'Nota fiscal' },
+    { icone: FaMoneyBillWave, nome: 'Financeiro' },
+    { icone: FaUniversity, nome: 'Banco' },
+    { icone: FaTools, nome: 'Configuração' },
+    { icone: FaCog, nome: 'Sistema' },
+    { icone: FaLock, nome: 'Segurança' },
+    { icone: FaKey, nome: 'Acesso' },
+    { icone: FaFileAlt, nome: 'Documento' },
+    { icone: FaFolder, nome: 'Arquivo' },
+    { icone: FaEnvelope, nome: 'E-mail' },
+    { icone: FaGlobe, nome: 'Internet' },
+    { icone: FaQuestionCircle, nome: 'Dúvida' },
+    { icone: FaLightbulb, nome: 'Informação' }
   ];
 
   function handleImageChange(e) {
@@ -179,150 +203,573 @@ function RegisterPage() {
   const inputClass =
     "w-full border border-gray-400 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400";
 
+
   return (
-    <div className="flex flex-col items-center px-5 py-10 min-h-screen bg-gray-100 font-sans">
-      {/* Dados do tutorial */}
-      <div className="w-full max-w-xl flex flex-col items-center gap-5 bg-white p-8 my-5 rounded-2xl shadow-md">
-        <h2 className="text-xl font-bold">Dados do tutorial</h2>
+    <div className="min-h-screen bg-slate-50 font-sans">
 
-        <input
-          className={inputClass}
-          type="text"
-          placeholder="Título do tutorial (ex: Caixa)"
-          value={assuntoTitulo}
-          onChange={(e) => setAssuntoTitulo(e.target.value)}
-        />
+      {/* =====================================================
+        CABEÇALHO
+    ===================================================== */}
+      <header className="border-b border-gray-200 bg-white">
+        <div className="max-w-5xl mx-auto px-5 py-5">
 
-        <textarea
-          className={`${inputClass} resize-none`}
-          placeholder="Descrição do tutorial"
-          value={assuntoDescricao}
-          onChange={(e) => setAssuntoDescricao(e.target.value)}
-          rows={3}
-        />
-
-        <select
-          className={inputClass}
-          value={assuntoIcone}
-          onChange={(e) => setAssuntoIcone(e.target.value)}
-        >
-          <option value="">Selecione um emoji</option>
-
-          {emojis.map((item) => (
-            <option key={item.emoji} value={item.emoji}>
-              {item.emoji} {item.nome}
-            </option>
-          ))}
-        </select>
-
-        <input
-          className={inputClass}
-          type="text"
-          placeholder="Link do vídeo final (opcional)"
-          value={assuntoVideoUrl}
-          onChange={(e) => setAssuntoVideoUrl(e.target.value)}
-        />
-      </div>
-
-      {/* Formulário de passo */}
-      <div className="w-full max-w-xl flex flex-col items-center gap-5 bg-white p-8 rounded-2xl shadow-md mt-5">
-        <h2 className="text-xl font-bold">
-          {editingIndex !== null ? "Editar passo" : "Adicionar passo"}
-        </h2>
-
-        <input
-          className={inputClass}
-          type="text"
-          placeholder="Título do passo"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <textarea
-          className={`${inputClass} resize-none`}
-          placeholder="Descrição do passo"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={4}
-        />
-
-        <div
-          onClick={openFileSelector}
-          className="w-full border-4 border-dotted border-gray-400 rounded-lg h-36 flex justify-center items-center cursor-pointer overflow-hidden bg-gray-50"
-        >
-          <input
-            ref={fileInputRef}
-            className="hidden"
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-          {preview ? (
-            <img
-              src={preview}
-              alt="Preview"
-              className="max-h-full max-w-full object-contain"
-            />
-          ) : (
-            <span className="text-gray-400">Clique para selecionar imagem</span>
-          )}
-        </div>
-
-        <button
-          onClick={saveStep}
-          className="w-full bg-white text-black border border-black rounded-lg h-10 font-bold hover:bg-gray-100 transition-colors"
-        >
-          {editingIndex !== null ? "Salvar Alterações" : "Adicionar Passo"}
-        </button>
-      </div>
-
-      {/* Lista de passos cadastrados */}
-      <div className="w-full max-w-xl mt-8">
-        <h2 className="text-center text-xl font-bold mb-5">Passos cadastrados</h2>
-
-        {fullGuide.length === 0 && (
-          <p className="text-center text-gray-400">Nenhum passo adicionado ainda.</p>
-        )}
-
-        {fullGuide.map((item, index) => (
-          <div
-            key={index}
-            className="bg-white px-5 py-4 rounded-lg mb-4 shadow-sm flex flex-col items-center gap-2.5"
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors mb-5"
           >
-            <div className="text-center">
-              <strong>{item.titulo}</strong>
-              <p className="mt-1 text-gray-600">{item.descricao}</p>
-            </div>
+            ← Voltar para o início
+          </button>
 
-            <div className="flex gap-2.5">
-              <button
-                onClick={() => handleEdit(index)}
-                className="border-none px-3 py-2 rounded-md bg-blue-600 text-white cursor-pointer min-w-[70px] hover:bg-blue-700 transition-colors"
-              >
-                Editar
-              </button>
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+              Cadastrar novo tutorial
+            </h1>
 
-              <button
-                onClick={() => handleDelete(index)}
-                className="border-none px-3 py-2 rounded-md bg-red-500 text-white cursor-pointer min-w-[70px] hover:bg-red-600 transition-colors"
-              >
-                Excluir
-              </button>
+            <p className="mt-1 text-sm text-gray-500">
+              Crie um assunto e organize o passo a passo para os usuários.
+            </p>
+          </div>
+
+        </div>
+      </header>
+
+
+      {/* =====================================================
+        CONTEÚDO
+    ===================================================== */}
+      <main className="max-w-5xl mx-auto px-5 py-8">
+
+        {/* ===================================================
+          INFORMAÇÕES DO TUTORIAL
+      =================================================== */}
+        <section className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+
+          <div className="px-6 py-5 border-b border-gray-100">
+            <div className="flex items-center gap-3">
+
+              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+                <RiBookShelfLine />
+              </div>
+
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">
+                  Informações do tutorial
+                </h2>
+
+                <p className="text-sm text-gray-500">
+                  Defina como o tutorial aparecerá na página inicial.
+                </p>
+              </div>
+
             </div>
           </div>
-        ))}
-      </div>
 
-      <button
-        onClick={handleCadastrarTutorial}
-        disabled={enviando}
-        className={`w-full max-w-xl border-none rounded-lg h-12 font-bold mt-5 text-base text-white transition-colors ${enviando ? "bg-gray-400 cursor-default" : "bg-green-600 hover:bg-green-700 cursor-pointer"
-          }`}
-      >
-        {enviando ? "Cadastrando..." : "Cadastrar Tutorial"}
-      </button>
+
+          <div className="p-6 space-y-6">
+
+            {/* TÍTULO */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Título do tutorial
+              </label>
+
+              <input
+                className={inputClass}
+                type="text"
+                placeholder="Ex: Caixa, Pallas, Nota Fiscal..."
+                value={assuntoTitulo}
+                onChange={(e) => setAssuntoTitulo(e.target.value)}
+              />
+            </div>
+
+
+            {/* DESCRIÇÃO */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Descrição
+              </label>
+
+              <textarea
+                className={`${inputClass} resize-none`}
+                placeholder="Explique brevemente sobre o que trata este tutorial."
+                value={assuntoDescricao}
+                onChange={(e) => setAssuntoDescricao(e.target.value)}
+                rows={3}
+              />
+            </div>
+
+
+            {/* ÍCONE */}
+            <div>
+
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
+                Ícone do tutorial
+              </label>
+
+              <p className="text-xs text-gray-500 mb-3">
+                Escolha o ícone que representará este assunto.
+              </p>
+
+              <div className="grid grid-cols-5 sm:grid-cols-7 md:grid-cols-10 gap-2">
+
+                {iconesDisponiveis.map((item) => {
+
+                  const Icone = item.icone;
+
+                  const selecionado =
+                    assuntoIcone === item.icone.name;
+
+                  return (
+                    <button
+                      key={item.icone.name}
+                      type="button"
+                      title={item.nome}
+                      onClick={() => setAssuntoIcone(item.icone.name)}
+                      className={`
+                      h-16
+                      rounded-xl
+                      border
+                      flex
+                      flex-col
+                      items-center
+                      justify-center
+                      transition-all
+                      duration-200
+                      ${selecionado
+                          ? 'border-blue-600 bg-blue-50 text-blue-600 ring-2 ring-blue-100'
+                          : 'border-gray-200 bg-gray-50 text-gray-500 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600'
+                        }
+                    `}
+                    >
+                      <Icone className="text-xl" />
+
+                      <span className="text-[9px] mt-1 leading-none">
+                        {item.nome}
+                      </span>
+                    </button>
+                  );
+
+                })}
+
+              </div>
+
+              {assuntoIcone && (
+                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-700 text-xs font-medium">
+
+                  <span>
+                    Ícone selecionado:
+                  </span>
+
+                  <span>
+                    {
+                      iconesDisponiveis.find(
+                        (item) =>
+                          item.icone.name === assuntoIcone
+                      )?.nome
+                    }
+                  </span>
+
+                </div>
+              )}
+
+            </div>
+
+
+            {/* VÍDEO */}
+            <div>
+
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Vídeo do tutorial
+                <span className="ml-2 font-normal text-gray-400">
+                  opcional
+                </span>
+              </label>
+
+              <input
+                className={inputClass}
+                type="text"
+                placeholder="Cole aqui o link do vídeo do YouTube"
+                value={assuntoVideoUrl}
+                onChange={(e) => setAssuntoVideoUrl(e.target.value)}
+              />
+
+              <p className="mt-1.5 text-xs text-gray-400">
+                O vídeo será exibido na página do tutorial.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        {/* ===================================================
+          ADICIONAR PASSO
+      =================================================== */}
+        <section className="mt-6 bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+
+          <div className="px-6 py-5 border-b border-gray-100">
+
+            <div className="flex items-center gap-3">
+
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                <RxPencil2 />
+              </div>
+
+              <div>
+                <h2 className="text-lg font-bold text-gray-900">
+                  {editingIndex !== null
+                    ? 'Editar passo'
+                    : 'Adicionar passo'}
+                </h2>
+
+                <p className="text-sm text-gray-500">
+                  Adicione as instruções e uma imagem para ajudar na explicação.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div className="p-6 space-y-6">
+
+            {/* TÍTULO DO PASSO */}
+            <div>
+
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Título do passo
+              </label>
+
+              <input
+                className={inputClass}
+                type="text"
+                placeholder="Ex: Abra o sistema Pallas"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+
+            </div>
+
+
+            {/* DESCRIÇÃO DO PASSO */}
+            <div>
+
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Descrição do passo
+              </label>
+
+              <textarea
+                className={`${inputClass} resize-none`}
+                placeholder="Descreva detalhadamente o que o usuário precisa fazer."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={5}
+              />
+
+            </div>
+
+
+            {/* IMAGEM */}
+            <div>
+
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Imagem do passo
+              </label>
+
+              <div
+                onClick={openFileSelector}
+                className={`
+                relative
+                w-full
+                min-h-[220px]
+                border-2
+                border-dashed
+                rounded-2xl
+                flex
+                justify-center
+                items-center
+                cursor-pointer
+                overflow-hidden
+                transition-all
+                ${preview
+                    ? 'border-blue-300 bg-gray-50'
+                    : 'border-gray-300 bg-gray-50 hover:border-blue-400 hover:bg-blue-50/30'
+                  }
+              `}
+              >
+
+                <input
+                  ref={fileInputRef}
+                  className="hidden"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
+
+                {preview ? (
+
+                  <>
+
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="max-h-[320px] max-w-full object-contain p-4"
+                    />
+
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-black/70 text-white text-xs">
+                      Clique para trocar a imagem
+                    </div>
+
+                  </>
+
+                ) : (
+
+                  <div className="text-center px-5 py-10">
+
+                    <div className="w-14 h-14 mx-auto rounded-2xl bg-white border border-gray-200 shadow-sm flex items-center justify-center text-2xl mb-3">
+                      <FaCamera />
+                    </div>
+
+                    <p className="font-semibold text-gray-700">
+                      Adicione uma imagem
+                    </p>
+
+                    <p className="text-sm text-gray-400 mt-1">
+                      Clique aqui para selecionar um arquivo
+                    </p>
+
+                    <p className="text-xs text-gray-400 mt-3">
+                      PNG, JPG ou JPEG
+                    </p>
+
+                  </div>
+
+                )}
+
+              </div>
+
+            </div>
+
+
+            {/* BOTÃO DO PASSO */}
+            <div className="flex flex-col sm:flex-row gap-3">
+
+              <button
+                type="button"
+                onClick={saveStep}
+                className="flex-1 h-11 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors"
+              >
+                {editingIndex !== null
+                  ? '✓ Salvar alterações'
+                  : '+ Adicionar passo'}
+              </button>
+
+              {editingIndex !== null && (
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingIndex(null);
+                    setTitle('');
+                    setDescription('');
+                    setImageFile(null);
+                    setPreview(null);
+                  }}
+                  className="h-11 px-5 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Cancelar
+                </button>
+
+              )}
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        {/* ===================================================
+          PASSOS CADASTRADOS
+      =================================================== */}
+        <section className="mt-6">
+
+          <div className="flex items-center justify-between mb-4">
+
+            <div>
+
+              <h2 className="text-lg font-bold text-gray-900">
+                Passos cadastrados
+              </h2>
+
+              <p className="text-sm text-gray-500">
+                Confira as etapas antes de publicar o tutorial.
+              </p>
+
+            </div>
+
+            <div className="px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 text-sm font-semibold">
+              {fullGuide.length}{' '}
+              {fullGuide.length === 1 ? 'passo' : 'passos'}
+            </div>
+
+          </div>
+
+
+          {fullGuide.length === 0 ? (
+
+            <div className="bg-white border border-dashed border-gray-300 rounded-2xl p-10 text-center">
+
+              <div className="w-14 h-14 mx-auto rounded-2xl bg-gray-100 flex items-center justify-center text-2xl mb-3">
+                <RxPencil2 />
+              </div>
+
+              <p className="font-semibold text-gray-600">
+                Nenhum passo adicionado
+              </p>
+
+              <p className="text-sm text-gray-400 mt-1">
+                Os passos adicionados aparecerão aqui.
+              </p>
+
+            </div>
+
+          ) : (
+
+            <div className="space-y-3">
+
+              {fullGuide.map((item, index) => (
+
+                <div
+                  key={index}
+                  className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow"
+                >
+
+                  <div className="flex flex-col sm:flex-row gap-4">
+
+                    {/* NÚMERO */}
+                    <div className="flex-shrink-0">
+
+                      <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                        {String(index + 1).padStart(2, '0')}
+                      </div>
+
+                    </div>
+
+
+                    {/* CONTEÚDO */}
+                    <div className="flex-1 min-w-0">
+
+                      <h3 className="font-bold text-gray-900">
+                        {item.titulo}
+                      </h3>
+
+                      <p className="text-sm text-gray-500 mt-1 leading-relaxed">
+                        {item.descricao}
+                      </p>
+
+                      {item._file && (
+
+                        <div className="mt-3 inline-flex items-center gap-2 text-xs text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg">
+                          ✓ Imagem adicionada
+                        </div>
+
+                      )}
+
+                    </div>
+
+
+                    {/* AÇÕES */}
+                    <div className="flex sm:flex-col gap-2">
+
+                      <button
+                        type="button"
+                        onClick={() => handleEdit(index)}
+                        className="flex-1 sm:flex-none px-4 py-2 rounded-lg bg-blue-50 text-blue-600 text-sm font-semibold hover:bg-blue-100 transition-colors"
+                      >
+                        Editar
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(index)}
+                        className="flex-1 sm:flex-none px-4 py-2 rounded-lg bg-red-50 text-red-600 text-sm font-semibold hover:bg-red-100 transition-colors"
+                      >
+                        Excluir
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          )}
+
+        </section>
+
+
+        {/* ===================================================
+          PUBLICAR
+      =================================================== */}
+        <section className="mt-8">
+
+          <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+              <div>
+
+                <h3 className="font-bold text-gray-900">
+                  Pronto para publicar?
+                </h3>
+
+                <p className="text-sm text-gray-500 mt-1">
+                  Revise as informações e publique o tutorial.
+                </p>
+
+              </div>
+
+              <button
+                type="button"
+                onClick={handleCadastrarTutorial}
+                disabled={enviando}
+                className={`
+                h-12
+                px-7
+                rounded-xl
+                font-bold
+                text-sm
+                text-white
+                transition-all
+                ${enviando
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-emerald-600 hover:bg-emerald-700 hover:shadow-lg'
+                  }
+              `}
+              >
+                {enviando
+                  ? 'Cadastrando...'
+                  : '✓ Cadastrar tutorial'}
+              </button>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
     </div>
   );
 }
-
-export default RegisterPage;
+  export default RegisterPage;

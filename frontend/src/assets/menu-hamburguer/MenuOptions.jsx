@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { BiSolidFoodMenu } from "react-icons/bi";
 
 // Ajuste se o seu backend rodar em outro endereço/porta
 const API_URL = 'http://localhost:3000/api';
@@ -36,7 +37,12 @@ function MenuOptions({ setIsOpen, isOpen }) {
         id="sidebar"
       >
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-bold">📋 Menu</h3>
+          
+          <div className="flex items-center gap-2">
+          <BiSolidFoodMenu />
+          <h3 className="text-lg font-bold">Menu</h3>
+          </div>
+          
           <button
             onClick={closeMenu}
             className="text-2xl leading-none text-gray-500 hover:text-gray-800"

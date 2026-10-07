@@ -1080,7 +1080,7 @@ function GuiaPage() {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-xl transition-colors no-underline"
         >
-          Falar com o suporte no WhatsApp 👨🏻
+          Falar com o suporte no WhatsApp <ImBubbles4 />
         </a>
       </div>
 

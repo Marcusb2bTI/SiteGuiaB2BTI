@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+
+
 const BACKEND_URL = 'http://localhost:3000';
 
 function AdminLoginModal({
@@ -81,10 +83,13 @@ function AdminLoginModal({
       
       <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
 
+        
+        
         <h2 className="text-xl font-bold mb-2">
            Acesso administrativo
         </h2>
-
+        
+        
         <p className="text-gray-600 mb-5">
           Informe seu usuário e senha para continuar.
         </p>
