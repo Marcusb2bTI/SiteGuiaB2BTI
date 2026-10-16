@@ -516,13 +516,61 @@ function GuiaPage() {
 
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <Link
-        to="/"
-        className="inline-flex items-center gap-1 mb-6 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-xl no-underline font-bold shadow-sm transition-colors"
-      >
-        &larr; Voltar
-      </Link>
+    <div className="min-h-screen bg-slate-50 -mx-4 px-4 py-8 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto"></div>
+      <div className="border-b border-gray-200 bg-white rounded-2xl shadow-sm mb-8">
+
+        <div className="p-6 sm:p-8">
+
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-blue-600 transition-colors no-underline mb-6"
+          >
+            ← Voltar para os assuntos
+          </Link>
+
+          <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+
+            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl">
+              📖
+            </div>
+
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                {assunto.titulo}
+              </h1>
+
+              {assunto.descricao && (
+                <p className="mt-2 text-gray-500 text-base leading-relaxed">
+                  {assunto.descricao}
+                </p>
+              )}
+            </div>
+
+            
+              <div className="flex justify-center  items-center gap-2 text-gray-600 text-sm">
+              <button
+                onClick={() => pedirLogin('editar', assunto)}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors shadow-sm"
+              >
+                ✏️ Editar assunto
+              </button>
+
+              <button
+                onClick={() => pedirLogin('desativar', assunto)}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-red-200 bg-red-50 text-red-600 font-semibold hover:bg-red-100 transition-colors"
+              >
+                🚫 Desativar
+              </button>
+              </div>
+
+
+            
+
+          </div>
+
+        </div>
+      </div>
 
       {/* Modal de senha */}
       <AdminLoginModal
@@ -551,7 +599,7 @@ function GuiaPage() {
             <div className="flex items-center justify-between mb-6">
 
               <h2 className="text-2xl font-bold text-gray-900">
-                 Editar assunto
+                Editar assunto
               </h2>
 
               <button
@@ -677,7 +725,7 @@ function GuiaPage() {
               <div className="flex items-center justify-between mb-4">
 
                 <h3 className="text-lg font-semibold">
-                   Passos do tutorial
+                  Passos do tutorial
                 </h3>
 
                 <button
@@ -960,40 +1008,6 @@ function GuiaPage() {
         </div>
       )}
 
-      {/* Assunto principal */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8 flex flex-col gap-4">
-        <h2 className="text-3xl font-bold text-gray-900">{assunto.titulo}</h2>
-        {assunto.descricao && (
-          <p className="text-gray-500 mt-2 text-base leading-relaxed">{assunto.descricao}</p>
-
-        )}
-
-        {/* Assunto principal */}
-        <div className="flex flex-col gap-4">
-
-
-          {/* Botões administrativos */}
-          <div className="flex gap-2 justify-between">
-
-            <button
-              onClick={() => pedirLogin('editar', assunto)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg flex-1 hover:bg-blue-700 transition-colors"
-            >
-               Editar
-            </button>
-
-            <button
-              onClick={() => pedirLogin('desativar', assunto)}
-              className="px-4 py-2 bg-red-600 text-white rounded-lg flex-1 hover:bg-red-700 transition-colors"
-            >
-               Desativar
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
 
       {/* Passos numerados, um card por passo */}
       {fullGuide.length === 0 && (
@@ -1147,6 +1161,7 @@ function GuiaPage() {
           </div>
         </div>
       )}
+
     </div>
   );
 }

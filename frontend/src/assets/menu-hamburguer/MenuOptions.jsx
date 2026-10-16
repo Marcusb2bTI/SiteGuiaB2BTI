@@ -1,9 +1,51 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { BiSolidFoodMenu } from "react-icons/bi";
+import {
+  FaPrint,
+  FaLaptop,
+  FaDesktop,
+  FaKeyboard,
+  FaMouse,
+  FaMobileAlt,
+  FaFileInvoice,
+  FaMoneyBillWave,
+  FaUniversity,
+  FaTools,
+  FaCog,
+  FaLock,
+  FaKey,
+  FaFileAlt,
+  FaFolder,
+  FaEnvelope,
+  FaGlobe,
+  FaQuestionCircle,
+  FaLightbulb
+} from 'react-icons/fa';
 
 // Ajuste se o seu backend rodar em outro endereço/porta
 const API_URL = 'http://localhost:3000/api';
+const mapaIcones = {
+  FaPrint,
+  FaLaptop,
+  FaDesktop,
+  FaKeyboard,
+  FaMouse,
+  FaMobileAlt,
+  FaFileInvoice,
+  FaMoneyBillWave,
+  FaUniversity,
+  FaTools,
+  FaCog,
+  FaLock,
+  FaKey,
+  FaFileAlt,
+  FaFolder,
+  FaEnvelope,
+  FaGlobe,
+  FaQuestionCircle,
+  FaLightbulb
+};
 
 function MenuOptions({ setIsOpen, isOpen }) {
   const [assuntos, setAssuntos] = useState([]);
@@ -59,7 +101,7 @@ function MenuOptions({ setIsOpen, isOpen }) {
               onClick={closeMenu}
               className="flex items-center gap-3 px-5 py-3 hover:bg-gray-100 transition-colors border-b border-gray-100"
             >
-              <span className="text-xl">{assunto.icone}</span>
+              {mapaIcones[assunto.icone]?.call(null, { className: "text-xl" })}
               <h4 className="text-sm font-medium text-gray-800">{assunto.titulo}</h4>
             </Link>
           ))}
