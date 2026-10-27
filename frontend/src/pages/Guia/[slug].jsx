@@ -2,6 +2,64 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import AdminLoginModal from '../../components/AdminLoginModal';
 import { ImBubbles4 } from "react-icons/im";
+import {
+  FaPrint,
+  FaLaptop,
+  FaDesktop,
+  FaKeyboard,
+  FaMouse,
+  FaMobileAlt,
+  FaFileInvoice,
+  FaMoneyBillWave,
+  FaUniversity,
+  FaTools,
+  FaCog,
+  FaLock,
+  FaKey,
+  FaFileAlt,
+  FaFolder,
+  FaEnvelope,
+  FaGlobe,
+  FaQuestionCircle,
+  FaLightbulb,
+  FaCamera,
+  FaPencilAlt 
+} from 'react-icons/fa';
+import { RiBookShelfLine } from "react-icons/ri";
+import { RxPencil2 } from "react-icons/rx";
+import { GiCancel } from "react-icons/gi";
+
+
+
+const opcoesIcones = [
+  { valor: 'FaPrint', nome: 'Impressora', Icone: FaPrint },
+  { valor: 'FaLaptop', nome: 'Computador', Icone: FaLaptop },
+  { valor: 'FaDesktop', nome: 'Monitor', Icone: FaDesktop },
+  { valor: 'FaKeyboard', nome: 'Teclado', Icone: FaKeyboard },
+  { valor: 'FaMouse', nome: 'Mouse', Icone: FaMouse },
+  { valor: 'FaMobileAlt', nome: 'Celular', Icone: FaMobileAlt },
+  { valor: 'FaFileInvoice', nome: 'Nota fiscal', Icone: FaFileInvoice },
+  { valor: 'FaMoneyBillWave', nome: 'Financeiro', Icone: FaMoneyBillWave },
+  { valor: 'FaUniversity', nome: 'Banco', Icone: FaUniversity },
+  { valor: 'FaTools', nome: 'Configuração', Icone: FaTools },
+  { valor: 'FaCog', nome: 'Sistema', Icone: FaCog },
+  { valor: 'FaLock', nome: 'Segurança', Icone: FaLock },
+  { valor: 'FaKey', nome: 'Acesso', Icone: FaKey },
+  { valor: 'FaFileAlt', nome: 'Documento', Icone: FaFileAlt },
+  { valor: 'FaFolder', nome: 'Arquivo', Icone: FaFolder },
+  { valor: 'FaEnvelope', nome: 'E-mail', Icone: FaEnvelope },
+  { valor: 'FaGlobe', nome: 'Internet', Icone: FaGlobe },
+  { valor: 'FaQuestionCircle', nome: 'Dúvida', Icone: FaQuestionCircle },
+  { valor: 'FaLightbulb', nome: 'Informação', Icone: FaLightbulb },
+  { valor: 'FaCamera', nome: 'Câmera', Icone: FaCamera },
+  { valor: 'RiBookShelfLine', nome: 'Manual / Livro', Icone: RiBookShelfLine },
+  { valor: 'RxPencil2', nome: 'Editar', Icone: RxPencil2 }
+];
+
+
+
+
+
 
 // Ajuste se o seu backend rodar em outro endereço/porta
 const API_URL = 'http://localhost:3000/api';
@@ -16,12 +74,12 @@ const ZOOM_MAX = 4;
 
 
 
-
 function GuiaPage() {
   const { slug } = useParams();
   const [dados, setDados] = useState(null);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
+  const [menuIconesAberto, setMenuIconesAberto] = useState(false);
 
   // Visualizador de imagem (lightbox com zoom)
   const [imagemAberta, setImagemAberta] = useState(null);
@@ -515,12 +573,15 @@ function GuiaPage() {
 
 
 
+
+
   return (
     <div className="min-h-screen bg-slate-50 -mx-4 px-4 py-8 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto"></div>
       <div className="border-b border-gray-200 bg-white rounded-2xl shadow-sm mb-8">
 
         <div className="p-6 sm:p-8">
+
 
           <Link
             to="/"
@@ -531,43 +592,49 @@ function GuiaPage() {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-5">
 
-            <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl">
-              📖
+            {/* Ícone e informações do assunto */}
+            <div className="flex items-center gap-5 min-w-0 flex-1">
+
+              <div className="min-w-0">
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                  {assunto.titulo}
+                </h1>
+
+                {assunto.descricao && (
+                  <p className="mt-2 text-gray-500 text-base leading-relaxed">
+                    {assunto.descricao}
+                  </p>
+                )}
+              </div>
+
             </div>
 
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                {assunto.titulo}
-              </h1>
+            {/* Botões alinhados à direita */}
+            <div className="flex flex-wrap items-center gap-2 sm:ml-auto sm:shrink-0">
 
-              {assunto.descricao && (
-                <p className="mt-2 text-gray-500 text-base leading-relaxed">
-                  {assunto.descricao}
-                </p>
-              )}
-            </div>
-
-            
-              <div className="flex justify-center  items-center gap-2 text-gray-600 text-sm">
               <button
                 onClick={() => pedirLogin('editar', assunto)}
                 className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors shadow-sm"
               >
-                ✏️ Editar assunto
+                <FaPencilAlt /> Editar assunto
               </button>
 
               <button
                 onClick={() => pedirLogin('desativar', assunto)}
                 className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-red-200 bg-red-50 text-red-600 font-semibold hover:bg-red-100 transition-colors"
               >
-                🚫 Desativar
+                <GiCancel /> Desativar
               </button>
-              </div>
 
-
-            
+            </div>
 
           </div>
+
+
+
+
+
+
 
         </div>
       </div>
@@ -657,43 +724,78 @@ function GuiaPage() {
 
 
               {/* Emoji */}
-              <div className="mb-4">
 
+
+              <div className="relative mb-4">
                 <label className="block text-sm font-semibold text-gray-700 mb-1">
                   Ícone
                 </label>
 
-                <select
-                  value={editIcone}
-                  onChange={(e) => setEditIcone(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2.5"
+                <button
+                  type="button"
+                  onClick={() => setMenuIconesAberto(!menuIconesAberto)}
+                  className="w-full flex items-center justify-between gap-3 border border-gray-300 rounded-lg px-3 py-2.5 bg-white text-gray-800 hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
+                  <span className="flex items-center gap-3">
+                    {(() => {
+                      const opcao = opcoesIcones.find(
+                        (item) => item.valor === editIcone
+                      );
 
-                  <option value="">Selecione um emoji</option>
+                      if (!opcao) {
+                        return <span className="text-gray-500">Selecione um ícone</span>;
+                      }
 
-                  <option value="🖨️">🖨️ Impressora</option>
-                  <option value="💻">💻 Computador</option>
-                  <option value="🖥️">🖥️ Monitor</option>
-                  <option value="⌨️">⌨️ Teclado</option>
-                  <option value="🖱️">🖱️ Mouse</option>
-                  <option value="📱">📱 Celular</option>
-                  <option value="🧾">🧾 Nota fiscal</option>
-                  <option value="💰">💰 Financeiro</option>
-                  <option value="🏦">🏦 Banco</option>
-                  <option value="🔧">🔧 Configuração</option>
-                  <option value="⚙️">⚙️ Sistema</option>
-                  <option value="🔒">🔒 Segurança</option>
-                  <option value="🔑">🔑 Acesso</option>
-                  <option value="📄">📄 Documento</option>
-                  <option value="📁">📁 Arquivo</option>
-                  <option value="📧">📧 E-mail</option>
-                  <option value="🌐">🌐 Internet</option>
-                  <option value="❓">❓ Dúvida</option>
-                  <option value="💡">💡 Informação</option>
+                      const Icone = opcao.Icone;
 
-                </select>
+                      return (
+                        <>
+                          <Icone size={20} className="text-blue-600" />
+                          <span>{opcao.nome}</span>
+                        </>
+                      );
+                    })()}
+                  </span>
 
+                  
+                </button>
+
+                {menuIconesAberto && (
+                  <div className="absolute left-0 right-0 top-full mt-1 z-50 max-h-64 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
+                    {opcoesIcones
+                      .filter((opcao) => opcao.valor !== 'FaChevronDown')
+                      .map((opcao) => {
+                        const Icone = opcao.Icone;
+                        const selecionado = editIcone === opcao.valor;
+
+                        return (
+                          <button
+                            key={opcao.valor}
+                            type="button"
+                            onClick={() => {
+                              setEditIcone(opcao.valor);
+                              setMenuIconesAberto(false);
+                            }}
+                            className={`w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors ${selecionado
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-gray-700 hover:bg-gray-50'
+                              }`}
+                          >
+                            <Icone size={20} className="shrink-0" />
+
+                            <span className="flex-1">{opcao.nome}</span>
+
+                            {selecionado && (
+                              <span className="text-blue-600 font-semibold">✓</span>
+                            )}
+                          </button>
+                        );
+                      })}
+                  </div>
+                )}
               </div>
+
+
 
 
               {/* Vídeo */}

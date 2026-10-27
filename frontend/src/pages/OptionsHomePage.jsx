@@ -72,7 +72,6 @@ function OptionsHomePage() {
         <button
           type="button"
           onClick={() => {
-            alert('Botão funcionando');
             setModalLogin(true);
           }}
           className="flex flex-col items-center text-center text-gray-800 bg-gray-50 border border-gray-200 rounded-xl p-5 transition-transform duration-150 hover:-translate-y-1 hover:shadow-lg"
