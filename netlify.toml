@@ -1,0 +1,15 @@
+# Configuração do Netlify para o projeto SiteGuiaB2BTI
+# Estrutura esperada na raiz do repositório:
+# /frontend/package.json
+# /backend-node/ (backend Node.js, hospedado separadamente)
+
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+# Permite que rotas do React Router abram diretamente pelo endereço.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
