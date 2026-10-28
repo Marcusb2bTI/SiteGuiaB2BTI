@@ -62,8 +62,8 @@ const opcoesIcones = [
 
 
 // Ajuste se o seu backend rodar em outro endereço/porta
-const API_URL = 'http://localhost:3000/api';
-const BACKEND_URL = 'http://localhost:3000'; // usado para montar a URL completa das imagens
+const API_URL = 'https://siteguiab2bti.onrender.com/api';
+const BACKEND_URL = 'https://siteguiab2bti.onrender.com'; // usado para montar a URL completa das imagens
 
 // Número de WhatsApp da equipe de suporte (com DDI+DDD, só números)
 const WHATSAPP_NUMERO = '5512997727816';

@@ -27,7 +27,7 @@ import { RxPencil2 } from "react-icons/rx";
 
 
 // Ajuste essa URL se o seu backend rodar em outro endereço/porta
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://siteguiab2bti.onrender.com/api';
 
 function RegisterPage() {
   const navigate = useNavigate();

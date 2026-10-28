@@ -25,7 +25,7 @@ import {
 } from 'react-icons/fa';
 
 // Ajuste se o seu backend rodar em outro endereço/porta
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://siteguiab2bti.onrender.com/api';
 const mapaIcones = {
   FaPrint,
   FaLaptop,
