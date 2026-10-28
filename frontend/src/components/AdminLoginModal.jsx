@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 
 
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL = 'https://siteguiab2bti.onrender.com';
 
 function AdminLoginModal({
   aberto,
