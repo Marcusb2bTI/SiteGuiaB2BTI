@@ -1,6 +1,5 @@
+
 import { useState } from 'react';
-
-
 
 const BACKEND_URL = 'https://siteguiab2bti.onrender.com';
 
@@ -9,7 +8,6 @@ function AdminLoginModal({
   onFechar,
   onLoginSucesso
 }) {
-  const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
@@ -19,8 +17,8 @@ function AdminLoginModal({
   }
 
   async function fazerLogin() {
-    if (!usuario || !senha) {
-      setErro('Informe usuário e senha.');
+    if (!senha) {
+      setErro('Informe a senha.');
       return;
     }
 
@@ -36,8 +34,8 @@ function AdminLoginModal({
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            usuario,
-            senha
+            usuario: 'admin',
+            senha: senha
           })
         }
       );
@@ -58,21 +56,19 @@ function AdminLoginModal({
         onLoginSucesso(data);
       }
 
-      // Limpa os campos
-      setUsuario('');
       setSenha('');
       setErro('');
 
     } catch (error) {
-      console.error(error);
+      console.error('Erro no login:', error);
       setErro(error.message);
+
     } finally {
       setCarregando(false);
     }
   }
 
   function fecharModal() {
-    setUsuario('');
     setSenha('');
     setErro('');
     onFechar();
@@ -80,21 +76,17 @@ function AdminLoginModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      
       <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
 
-        
-        
         <h2 className="text-xl font-bold mb-2">
-           Acesso administrativo
+          Acesso administrativo
         </h2>
-        
-        
+
         <p className="text-gray-600 mb-5">
-          Informe seu usuário e senha para continuar.
+          Informe a senha para continuar.
         </p>
 
-        {/* USUÁRIO */}
+        {/* USUÁRIO FIXO */}
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1">
             Usuário
@@ -102,11 +94,9 @@ function AdminLoginModal({
 
           <input
             type="text"
-            value={usuario}
-            onChange={(e) => setUsuario(e.target.value)}
-            placeholder="Digite seu usuário:"
-            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            autoFocus
+            value="admin"
+            readOnly
+            className="w-full border rounded-lg px-3 py-2 bg-gray-100 text-gray-600 cursor-not-allowed focus:outline-none"
           />
         </div>
 
@@ -126,6 +116,7 @@ function AdminLoginModal({
               }
             }}
             placeholder="Digite sua senha:"
+            autoFocus
             className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -159,9 +150,7 @@ function AdminLoginModal({
           </button>
 
         </div>
-
       </div>
-
     </div>
   );
 }

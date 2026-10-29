@@ -239,81 +239,62 @@ function GuiaPage() {
     setModalLogin(true);
   }
 
-  async function fazerLogin() {
+  
+async function fazerLogin() {
+  if (!senhaLogin) {
+    setErroLogin('Informe a senha.');
+    return;
+  }
 
-    if (!usuarioLogin || !senhaLogin) {
-      setErroLogin('Informe usuário e senha.');
-      return;
+  setCarregandoLogin(true);
+  setErroLogin('');
+
+  try {
+    const response = await fetch(
+      `${BACKEND_URL}/api/auth/login`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          usuario: 'admin',
+          senha: senhaLogin
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.erro || 'Usuário ou senha inválidos.'
+      );
     }
 
-    setCarregandoLogin(true);
+    localStorage.setItem('token', data.token);
+
+    setModalLogin(false);
+    setUsuarioLogin('admin');
+    setSenhaLogin('');
     setErroLogin('');
 
-    try {
-
-      const response = await fetch(
-        `${BACKEND_URL}/api/auth/login`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            usuario: usuarioLogin,
-            senha: senhaLogin
-          })
-        }
-      );
-
-
-      const data = await response.json();
-
-
-      if (!response.ok) {
-        throw new Error(
-          data.erro || 'Usuário ou senha inválidos.'
-        );
-      }
-
-
-      // Guarda o token
-      localStorage.setItem(
-        'token',
-        data.token
-      );
-
-
-      // Fecha o modal
-      setModalLogin(false);
-
-      setUsuarioLogin('');
-      setSenhaLogin('');
-      setErroLogin('');
-
-
-      // Executa a ação que o usuário tentou fazer
-      if (acaoAdmin?.tipo === 'editar') {
-        handleEditar(acaoAdmin.assunto);
-      }
-
-
-      if (acaoAdmin?.tipo === 'desativar') {
-        handleDesativar(acaoAdmin.assunto);
-      }
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      setErroLogin(error.message);
-
-    } finally {
-
-      setCarregandoLogin(false);
-
+    if (acaoAdmin?.tipo === 'editar') {
+      handleEditar(acaoAdmin.assunto);
     }
+
+    if (acaoAdmin?.tipo === 'desativar') {
+      handleDesativar(acaoAdmin.assunto);
+    }
+
+  } catch (error) {
+    console.error('Erro no login:', error);
+    setErroLogin(error.message);
+
+  } finally {
+    setCarregandoLogin(false);
   }
+}
 
   function handleEditar(assunto) {
     setEditTitulo(assunto.titulo || '');
@@ -761,7 +742,7 @@ function GuiaPage() {
                     })()}
                   </span>
 
-                  
+
                 </button>
 
                 {menuIconesAberto && (
@@ -781,8 +762,8 @@ function GuiaPage() {
                               setMenuIconesAberto(false);
                             }}
                             className={`w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors ${selecionado
-                                ? 'bg-blue-50 text-blue-700'
-                                : 'text-gray-700 hover:bg-gray-50'
+                              ? 'bg-blue-50 text-blue-700'
+                              : 'text-gray-700 hover:bg-gray-50'
                               }`}
                           >
                             <Icone size={20} className="shrink-0" />
@@ -867,7 +848,7 @@ function GuiaPage() {
 
                     <button
                       onClick={() => removerPassoEdicao(index)}
-                      className="text-red-600 hover:text-red-800 text-sm font-semibold"
+                      className="text-red-600 hover:text-red-800  flex items-center gap-2 text-sm font-semibold"
                     >
                       <IoTrashBin /> Remover passo
                     </button>
@@ -949,9 +930,9 @@ function GuiaPage() {
                                 onClick={() =>
                                   removerImagemPasso(index, imgIndex)
                                 }
-                                className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-8 h-8 hover:bg-red-700"
+                                className="absolute top-2 flex items-center justify-center right-2 bg-red-600 text-white rounded-full w-8 h-8 hover:bg-red-700"
                               >
-                                <IoIosClose />
+                                <IoIosClose className="w-10 h-10" />
                               </button>
 
                             </div>
@@ -1009,7 +990,7 @@ function GuiaPage() {
 
               <button
                 onClick={salvarEdicao}
-                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                className="px-4 py-2 flex items-center justify-center gap-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
               >
                 <FaSave /> Salvar
               </button>
@@ -1044,10 +1025,10 @@ function GuiaPage() {
 
               <input
                 type="text"
-                value={usuarioLogin}
-                onChange={(e) => setUsuarioLogin(e.target.value)}
-                placeholder="Digite seu usuário:"
-                className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value="admin"
+                readOnly
+                placeholder="Usuário"
+                className="w-full border rounded-lg px-3 py-2 bg-gray-100 text-gray-600 cursor-not-allowed focus:outline-none"
               />
 
             </div>
