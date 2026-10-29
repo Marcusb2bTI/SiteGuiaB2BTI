@@ -53,26 +53,26 @@ function RegisterPage() {
   const fileInputRef = useRef(null);
 
   const iconesDisponiveis = [
-    { icone: FaPrint, nome: 'Impressora' },
-    { icone: FaLaptop, nome: 'Computador' },
-    { icone: FaDesktop, nome: 'Monitor' },
-    { icone: FaKeyboard, nome: 'Teclado' },
-    { icone: FaMouse, nome: 'Mouse' },
-    { icone: FaMobileAlt, nome: 'Celular' },
-    { icone: FaFileInvoice, nome: 'Nota fiscal' },
-    { icone: FaMoneyBillWave, nome: 'Financeiro' },
-    { icone: FaUniversity, nome: 'Banco' },
-    { icone: FaTools, nome: 'Configuração' },
-    { icone: FaCog, nome: 'Sistema' },
-    { icone: FaLock, nome: 'Segurança' },
-    { icone: FaKey, nome: 'Acesso' },
-    { icone: FaFileAlt, nome: 'Documento' },
-    { icone: FaFolder, nome: 'Arquivo' },
-    { icone: FaEnvelope, nome: 'E-mail' },
-    { icone: FaGlobe, nome: 'Internet' },
-    { icone: FaQuestionCircle, nome: 'Dúvida' },
-    { icone: FaLightbulb, nome: 'Informação' }
-  ];
+  { icone: FaPrint, nome: 'Impressora', valor: 'FaPrint' },
+  { icone: FaLaptop, nome: 'Computador', valor: 'FaLaptop' },
+  { icone: FaDesktop, nome: 'Monitor', valor: 'FaDesktop' },
+  { icone: FaKeyboard, nome: 'Teclado', valor: 'FaKeyboard' },
+  { icone: FaMouse, nome: 'Mouse', valor: 'FaMouse' },
+  { icone: FaMobileAlt, nome: 'Celular', valor: 'FaMobileAlt' },
+  { icone: FaFileInvoice, nome: 'Nota fiscal', valor: 'FaFileInvoice' },
+  { icone: FaMoneyBillWave, nome: 'Financeiro', valor: 'FaMoneyBillWave' },
+  { icone: FaUniversity, nome: 'Banco', valor: 'FaUniversity' },
+  { icone: FaTools, nome: 'Configuração', valor: 'FaTools' },
+  { icone: FaCog, nome: 'Sistema', valor: 'FaCog' },
+  { icone: FaLock, nome: 'Segurança', valor: 'FaLock' },
+  { icone: FaKey, nome: 'Acesso', valor: 'FaKey' },
+  { icone: FaFileAlt, nome: 'Documento', valor: 'FaFileAlt' },
+  { icone: FaFolder, nome: 'Arquivo', valor: 'FaFolder' },
+  { icone: FaEnvelope, nome: 'E-mail', valor: 'FaEnvelope' },
+  { icone: FaGlobe, nome: 'Internet', valor: 'FaGlobe' },
+  { icone: FaQuestionCircle, nome: 'Dúvida', valor: 'FaQuestionCircle' },
+  { icone: FaLightbulb, nome: 'Informação', valor: 'FaLightbulb' }
+];
 
   function handleImageChange(e) {
     const file = e.target.files[0];
@@ -318,14 +318,14 @@ function RegisterPage() {
                   const Icone = item.icone;
 
                   const selecionado =
-                    assuntoIcone === item.icone.name;
+                    assuntoIcone === item.valor;
 
                   return (
                     <button
-                      key={item.icone.name}
+                      key={item.valor}
                       type="button"
                       title={item.nome}
-                      onClick={() => setAssuntoIcone(item.icone.name)}
+                      onClick={() => setAssuntoIcone(item.valor)}
                       className={`
                       h-16
                       rounded-xl
@@ -365,7 +365,7 @@ function RegisterPage() {
                     {
                       iconesDisponiveis.find(
                         (item) =>
-                          item.icone.name === assuntoIcone
+                          item.valor === assuntoIcone
                       )?.nome
                     }
                   </span>
