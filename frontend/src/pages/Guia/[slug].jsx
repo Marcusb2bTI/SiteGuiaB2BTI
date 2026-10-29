@@ -23,11 +23,15 @@ import {
   FaQuestionCircle,
   FaLightbulb,
   FaCamera,
-  FaPencilAlt 
+  FaPencilAlt,
+  FaSave
 } from 'react-icons/fa';
 import { RiBookShelfLine } from "react-icons/ri";
 import { RxPencil2 } from "react-icons/rx";
 import { GiCancel } from "react-icons/gi";
+import { IoTrashBin } from "react-icons/io5";
+import { IoIosClose } from "react-icons/io";
+import { MdFilterFrames } from "react-icons/md";
 
 
 
@@ -865,7 +869,7 @@ function GuiaPage() {
                       onClick={() => removerPassoEdicao(index)}
                       className="text-red-600 hover:text-red-800 text-sm font-semibold"
                     >
-                      🗑️ Remover passo
+                      <IoTrashBin /> Remover passo
                     </button>
 
                   </div>
@@ -947,7 +951,7 @@ function GuiaPage() {
                                 }
                                 className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-8 h-8 hover:bg-red-700"
                               >
-                                ✕
+                                <IoIosClose />
                               </button>
 
                             </div>
@@ -963,7 +967,7 @@ function GuiaPage() {
                     {/* Adicionar imagem */}
                     <label className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700">
 
-                      🖼️ Adicionar imagem
+                      <MdFilterFrames /> Adicionar imagem
 
                       <input
                         type="file"
@@ -1007,7 +1011,7 @@ function GuiaPage() {
                 onClick={salvarEdicao}
                 className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
               >
-                💾 Salvar
+                <FaSave /> Salvar
               </button>
 
             </div>
